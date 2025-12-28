@@ -61,6 +61,13 @@ UserSchema.pre("save", function (next) {
     next();
 });
 
+// Not send password data if UserSchema model is called
+UserSchema.methods.toJSON = function () {
+    const user = this.toObject();
+    delete user.password;
+    return user;
+};
+
 const UserModel = mongoose.model("User", UserSchema);
 
 export default UserModel;
