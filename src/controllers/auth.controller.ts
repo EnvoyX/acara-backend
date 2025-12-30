@@ -3,6 +3,8 @@ import * as Yup from "yup";
 
 import UserModel from "../models/user.model";
 import { encrypt } from "../utils/encryption";
+import { genereateToken } from "../utils/jwt";
+import { ReqUser } from "../middlewares/auth.middleware";
 
 type Register = {
     fullName: string;
@@ -93,9 +95,32 @@ export default {
                 });
             }
 
+            const token = genereateToken({
+                id: userByIdentifier._id,
+                role: userByIdentifier.role,
+            });
+
             res.status(200).json({
                 message: "Successful login!",
-                data: userByIdentifier,
+                data: token,
+            });
+        } catch (error) {
+            const err = error as unknown as Error;
+            res.status(400).json({
+                message: err.message,
+                data: null,
+            });
+        }
+    },
+
+    async me(req: ReqUser, res: Response) {
+        try {
+            const user = req.user;
+            const result = await UserModel.findById(user.id);
+
+            res.status(200).json({
+                message: "Success get user data",
+                data: result,
             });
         } catch (error) {
             const err = error as unknown as Error;
