@@ -1,9 +1,6 @@
 import { NextFunction, Request, Response } from "express";
-import { UserToken, getUserData } from "../utils/jwt";
-
-export interface ReqUser extends Request {
-    user: UserToken;
-}
+import { getUserData } from "../utils/jwt";
+import { ReqUser } from "../utils/interface";
 
 export default function authMiddlewareHandler(
     req: Request,

@@ -4,7 +4,7 @@ import * as Yup from "yup";
 import UserModel from "../models/user.model";
 import { encrypt } from "../utils/encryption";
 import { genereateToken } from "../utils/jwt";
-import { ReqUser } from "../middlewares/auth.middleware";
+import { ReqUser } from "../utils/interface";
 
 type Register = {
     fullName: string;
@@ -63,6 +63,13 @@ export default {
         }
     },
     async login(req: Request, res: Response) {
+        /**
+       #swagger.requestBody= {
+       required: true,
+       schema: {$ref : "#/components/schemas/LoginRequest"}
+    }
+    */
+
         try {
             // User "identifier" refers to email & userName
             const { identifier, password } = req.body as unknown as Login;
@@ -114,9 +121,14 @@ export default {
     },
 
     async me(req: ReqUser, res: Response) {
+        /**
+     #swagger.security= [{
+     "bearerAuth": []
+     }]
+  */
         try {
             const user = req.user;
-            const result = await UserModel.findById(user.id);
+            const result = await UserModel.findById(user?.id);
 
             res.status(200).json({
                 message: "Success get user data",

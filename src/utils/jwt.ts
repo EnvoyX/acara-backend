@@ -1,20 +1,6 @@
-import { Types } from "mongoose";
-import { User } from "../models/user.model";
 import jwt from "jsonwebtoken";
 import { SECRET } from "./env";
-
-export interface UserToken extends Omit<
-    User,
-    | "password"
-    | "activationCode"
-    | "isActive"
-    | "email"
-    | "fullName"
-    | "profilePicture"
-    | "userName"
-> {
-    id: Types.ObjectId;
-}
+import { UserToken } from "./interface";
 
 export const genereateToken = (user: UserToken): string => {
     const token = jwt.sign(user, SECRET, {
