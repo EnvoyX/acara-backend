@@ -28,6 +28,16 @@ const doc = {
                 identifier: "Envoy",
                 password: "123456",
             },
+            RegisterRequest: {
+                fullName: "member2026",
+                userName: "member2026",
+                email: "member2026@yopmail.com",
+                password: "Member2026!",
+                confirmPassword: "Member2026!",
+            },
+            ActivationRequest: {
+                code: "abcdef123456",
+            },
         },
     },
 };
