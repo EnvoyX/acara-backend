@@ -24,3 +24,10 @@ export interface PaginationQuery {
     limit: number;
     search?: string;
 }
+
+export interface SendEmail {
+    to: string;
+    from: string;
+    subject: string;
+    html: string;
+}

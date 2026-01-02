@@ -5,19 +5,7 @@ import UserModel from "../models/user.model";
 import { encrypt } from "../utils/encryption";
 import { genereateToken } from "../utils/jwt";
 import { ReqUser } from "../utils/interface";
-
-type Register = {
-    fullName: string;
-    userName: string;
-    email: string;
-    password: string;
-    confirmPassword: string;
-};
-
-type Login = {
-    identifier: string;
-    password: string;
-};
+import { Login, Register } from "../utils/types";
 
 const registerSchema = Yup.object({
     fullName: Yup.string().required(),
@@ -31,6 +19,9 @@ const registerSchema = Yup.object({
 
 export default {
     async register(req: Request, res: Response) {
+        /**
+         #swagger.tags=["Auth"]
+         */
         const { fullName, userName, email, password, confirmPassword } =
             req.body as unknown as Register;
 
@@ -64,6 +55,7 @@ export default {
     },
     async login(req: Request, res: Response) {
         /**
+      #swagger.tags=["Auth"]
        #swagger.requestBody= {
        required: true,
        schema: {$ref : "#/components/schemas/LoginRequest"}
@@ -122,6 +114,7 @@ export default {
 
     async me(req: ReqUser, res: Response) {
         /**
+      #swagger.tags=["Auth"]
      #swagger.security= [{
      "bearerAuth": []
      }]
